@@ -10,7 +10,7 @@ from matplotlib.figure import Figure
 
 app = Flask(__name__)
 
-MODEL_PATH = '/workspaces/breast_cancer_diagnosis/flask_app/model.h5'
+MODEL_PATH = '../data/model.h5'
 IMAGE_DIM = 128
 CLASS_NAMES = ['Image tested Negative for IDC', 'Image tested Positive for IDC']
 
