@@ -3,6 +3,7 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
+from keras.src import ops
 import os
 from pathlib import Path
 import io
@@ -10,8 +11,8 @@ from matplotlib.figure import Figure
 
 app = Flask(__name__)
 
-MODEL_PATH = '../data/model.h5'
-IMAGE_DIM = 128
+MODEL_PATH = '../data/model.keras'
+IMAGE_DIM = 50
 CLASS_NAMES = ['Image tested Negative for IDC', 'Image tested Positive for IDC']
 
 # Load the trained model
@@ -20,12 +21,13 @@ if os.path.exists(MODEL_PATH):
     model = load_model(MODEL_PATH)
     print("Model loaded successfully!")
 else:
-    print("Error: Model file not found. Please ensure 'model.h5' is in the correct directory.")
+    print("Error: Model file not found. Please ensure 'model.keras' is in the correct directory.")
 
 # Helper function to preprocess images
 def preprocess_image(img_path, image_dim):
     img = image.load_img(img_path, target_size=(image_dim, image_dim))
     img = image.img_to_array(img) / 255.0
+    img = ops.image.rgb_to_grayscale(img)
     img = np.expand_dims(img, axis=0)
     return img
 
